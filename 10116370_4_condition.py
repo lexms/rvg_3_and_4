@@ -4,7 +4,7 @@
 
 import math 
 
-class Simulate_case_4:
+class Simulate_case_4_2:
     def __init__(self):
             self.a = 7
             self.m = 128
@@ -24,7 +24,10 @@ class Simulate_case_4:
 
     def rvg_poisson_distribution(self):
         _list = []
-        for i in range(0,self.count):
+        count_true = 0
+        i = 0
+        while count_true < self.count:
+
             if i == 0:
                 k = 1
                 zi = self.multiplicative_formula(self.z0)
@@ -35,14 +38,14 @@ class Simulate_case_4:
                     X = k-1
                     status = 'TRUE'
                     k = 1
+                    if X != 0:
+                        count_true += 1
                 else:
                     status = 'FALSE'
                     X = 0
-                    
-
                 _list.append({'K': 1, 'Zi':zi, 'Ui':ui, 'Pk':Pk, 'status': status, 'X': X})
+            
             elif i>0:
-
                 zi = self.multiplicative_formula(_list[i-1]['Zi'])
                 ui = self.ui_generate(zi)
                 if k == 1:
@@ -55,13 +58,15 @@ class Simulate_case_4:
                     X = k-1
                     status = 'TRUE'
                     k = 1
+                    if X != 0:
+                        count_true += 1
                 else:
                     status = 'FALSE'
                     X = 0
                     k=k+1
 
                 _list.append({'K': k, 'Zi':zi, 'Ui':ui, 'Pk':Pk, 'status': status, 'X': X})
-        
+            i+=1
         return _list
 
     def print_table(self):
@@ -74,5 +79,5 @@ class Simulate_case_4:
 
 
 
-test = Simulate_case_4()
+test = Simulate_case_4_2()
 test.print_table()
